@@ -12,9 +12,9 @@ export function fetchHomePage() {
   return fetchWithErrorHandling(`${BASE_URL}trending/movie/day?api_key=${KEY}`);
 }
 
-export function fetchMoviesPage() {
+export function fetchMoviesPage(name) {
   return fetchWithErrorHandling(
-    `${BASE_URL}/search/search-movies?api_key=${KEY}`
+    `${BASE_URL}search/movie?api_key=${KEY}&language=en-US&query=${name}`
   );
 }
 
