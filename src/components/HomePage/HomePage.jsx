@@ -1,16 +1,19 @@
-import s from "./HomePage.module.css";
 import { fetchHomePage } from "../../services/API.js";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import ListMovies from "../../views/ListMovies";
+import Loader from "../Loader/Loader.jsx";
 
 export default function HomePage() {
   const [results, setResults] = useState([]);
   const [error, setError] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     try {
+      setLoading(true);
       fetchHomePage().then(({ results }) => {
-        setResults((prevState) => [...prevState, ...results]);
+        setResults(results);
+        setLoading(false);
       });
     } catch (error) {
       setError(error);
@@ -18,23 +21,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <ul className={s.home}>
-      {results.map(({ id, poster_path, title }) => {
-        return (
-          <li key={id} className={s.card}>
-            <NavLink to={`/movies/${id}`}>
-              <img
-                className={s.card__img}
-                src={`https://image.tmdb.org/t/p/w300${poster_path}`}
-                alt={title}
-              />
-            </NavLink>
-            <div className={s.card__information}>
-              <h2 className={s.card__name}>{title}</h2>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      {loading && <Loader />}
+      <ListMovies results={results} />
+    </>
   );
 }

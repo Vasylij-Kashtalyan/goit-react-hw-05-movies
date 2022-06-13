@@ -1,30 +1,31 @@
-import { useState, useEffect } from "react";
 import { fetchMoviesPage } from "../../services/API";
+import { useState } from "react";
+import ListMovies from "../../views/ListMovies";
 import { ImSearch } from "react-icons/im";
+import Loader from "../Loader";
 import s from "./MoviesPage.module.css";
-import HomePage from "../HomePage/HomePage";
 
-export default function MoviesPage({ onSubmit }) {
+export default function MoviesPage() {
   const [name, setName] = useState("");
   const [results, setResults] = useState([]);
-
-  useEffect(() => {
-    if (!name) {
-      return;
-    }
-    try {
-      fetchMoviesPage(name).then(({ results }) => {
-        setResults((prevState) => [...prevState, ...results]);
-      });
-    } catch {}
-  }, [name]);
+  const [loading, setLoading] = useState(false);
 
   const handlerSubmit = (evt) => {
     evt.preventDefault();
     if (name.trim() === "") {
-      alert("Введіть імя для пошуку..");
+      alert("Enter a name search for..");
+      return;
     }
-    onSubmit(name);
+    setLoading(true);
+    fetchMoviesPage(name).then(({ results }) => {
+      setLoading(false);
+
+      if (results.length === 0) {
+        return alert(`Nothing found for ${name} `);
+      }
+      setResults(results);
+      setLoading(false);
+    });
   };
 
   const handlerNameChanche = (evt) => setName(evt.currentTarget.value);
@@ -48,8 +49,8 @@ export default function MoviesPage({ onSubmit }) {
           placeholder="Search movies"
         />
       </form>
-
-      {/* {results.length && <HomePage onSubmit={handlerNameChanche} />} */}
+      {loading && <Loader />}
+      <ListMovies results={results} />
     </>
   );
 }
