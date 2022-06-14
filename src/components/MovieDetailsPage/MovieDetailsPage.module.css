@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  margin-top: 10px;
+}
+.picture {
+  width: 30%;
+  margin-right: 15px;
+}
+.title {
+  margin-bottom: 20px;
+}
+
+.list {
+  display: flex;
+}
+.item {
+  padding: 10px;
+  color: black;
+}
+.link {
+  color: black;
+}
+/* .btn {
+  border: none;
+  background-color: white;
+}
+.btn:hover {
+  background-color: rgb(236, 234, 234);
+} */
