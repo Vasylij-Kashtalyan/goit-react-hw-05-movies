@@ -20,7 +20,7 @@ export default function Reviews() {
   return (
     <>
       {loading && <Loader />}
-      {reviews && reviews ? (
+      {reviews && reviews.length > 0 ? (
         <ul>
           {reviews.map(({ content, id }) => (
             <li className={s.item} key={id}>
