@@ -12,6 +12,8 @@ export default function MoviesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchName = searchParams.get("film") || "";
 
+  const [search, setSearch] = useState(searchName);
+
   useEffect(() => {
     if (searchName) {
       setLoading(true);
@@ -27,12 +29,18 @@ export default function MoviesPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const name = e.target.search.value;
 
     if (name.trim() === "") {
       return alert(`Enter name for search`);
     }
+
     setSearchParams({ film: name });
+  };
+  const handleInput = (e) => {
+    const chang = e.currentTarget.value;
+    setSearch(chang);
   };
 
   return (
@@ -43,8 +51,10 @@ export default function MoviesPage() {
           <span className={s.SearchFormButtonLabel}>Search</span>
         </button>
         <input
+          value={search}
+          onChange={handleInput}
           className={s.SearchFormInput}
-          type="name"
+          type="search"
           name="search"
           autoComplete="off"
           autoFocus
