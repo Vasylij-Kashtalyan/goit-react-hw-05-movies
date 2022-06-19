@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FetchFilmCast } from "../../services/API";
+import Loader from "../../components/Loader";
 import s from "./Cast.module.css";
-import Loader from "../Loader";
 
 export default function Cast() {
   const { movieId } = useParams();

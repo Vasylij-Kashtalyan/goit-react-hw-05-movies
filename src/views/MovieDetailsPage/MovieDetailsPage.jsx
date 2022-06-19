@@ -1,6 +1,7 @@
 import s from "./MovieDetailsPage.module.css";
 import { useState, useEffect } from "react";
 import { fetchMovieDetailsPage } from "../../services/API";
+import Loader from "../../components/Loader/Loader.jsx";
 import {
   Link,
   useParams,
@@ -12,13 +13,17 @@ import {
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [filmInfo, setFilmInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchMovieDetailsPage(movieId).then((film) => {
-      setFilmInfo(film);
-    });
+    setLoading(true);
+    fetchMovieDetailsPage(movieId)
+      .then((film) => {
+        setFilmInfo(film);
+      })
+      .finally(() => setLoading(false));
   }, [movieId]);
 
   const goBack = () => {
@@ -31,6 +36,7 @@ export default function MovieDetailsPage() {
 
   return (
     <>
+      {loading && <Loader />}
       {filmInfo && (
         <>
           <button onClick={goBack} className={s.btn}>

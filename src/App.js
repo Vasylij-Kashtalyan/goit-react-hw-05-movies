@@ -10,29 +10,30 @@ import Container from "./components/Container";
 // import Reviews from "./components/Reviews/Reviews";
 
 const AppBar = lazy(() => import("./components/AppBar/AppBar"));
-const HomePage = lazy(() => import("./components/HomePage/HomePage.jsx"));
-const MoviesPage = lazy(() => import("./components/MoviesPage"));
+const HomePage = lazy(() => import("./views/HomePage/HomePage"));
+const MoviesPage = lazy(() => import("./views/MoviesPage"));
 const MovieDetailsPage = lazy(() =>
-  import("./components/MovieDetailsPage/MovieDetailsPage")
+  import("./views/MovieDetailsPage/MovieDetailsPage")
 );
-const Cast = lazy(() => import("./components/Cast"));
-const Reviews = lazy(() => import("./components/Reviews/Reviews"));
-const NotFoundView = lazy(() => import("./views/NotFoundViews"));
+const Cast = lazy(() => import("./views/Cast"));
+const Reviews = lazy(() => import("./views/Reviews/Reviews"));
+const NotFoundView = lazy(() =>
+  import("./components/NotFoundViews/NotFoundViews")
+);
 
 function App() {
   return (
     <Container>
+      <AppBar />
       <Suspense>
         <Routes>
-          <Route path="/" element={<AppBar />}>
-            <Route index exact="true" element={<HomePage />} />
-            <Route path="movies" element={<MoviesPage />} />
-            <Route path="movies/:movieId" element={<MovieDetailsPage />}>
-              <Route path="cast" element={<Cast />} />
-              <Route path="reviews" element={<Reviews />} />
-            </Route>
-            <Route path="*" element={<NotFoundView />} />
+          <Route path="/" exact="true" element={<HomePage />} />
+          <Route path="movies" element={<MoviesPage />} />
+          <Route path="movies/:movieId" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
           </Route>
+          <Route path="*" element={<NotFoundView />} />
         </Routes>
       </Suspense>
     </Container>

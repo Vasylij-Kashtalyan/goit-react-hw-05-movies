@@ -1,7 +1,7 @@
-import { fetchHomePage } from "../../services/API.js";
 import { useState, useEffect } from "react";
-import Loader from "../Loader/Loader.jsx";
 import { useLocation, Link } from "react-router-dom";
+import { fetchHomePage } from "../../services/API.js";
+import Loader from "../../components/Loader/Loader.jsx";
 import s from "./HomePage.module.css";
 
 export default function HomePage() {
