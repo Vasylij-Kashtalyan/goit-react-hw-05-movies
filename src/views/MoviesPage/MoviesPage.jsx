@@ -32,9 +32,9 @@ export default function MoviesPage() {
 
     const name = e.target.search.value;
 
-    if (name.trim() === "") {
-      return alert(`Enter name for search`);
-    }
+    if (name.trim() === "") return alert(`Enter name for search`);
+
+    if (searchName.length === 0) return alert(`Movie ${name} not found`);
 
     setSearchParams({ film: name });
   };
